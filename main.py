@@ -90,12 +90,14 @@ d.polygon([(PX0 + 62, PYp1 - 62), (ncx, PYp1 - 38), (PX1 - 62, PYp1 - 62),
 d.rectangle([ncx - 12, PYp0 + 118, ncx + 12, PYp0 + 148], fill=(214, 166, 130))
 # face
 d.ellipse([ncx - 32, PYp0 + 34, ncx + 32, PYp0 + 128], fill=(224, 178, 142))
-# hair: bun on top + cap + side strands
+# hair: bun on top + cap + side strands (rounded ends so the hair reads as hair, not a block)
 d.ellipse([ncx - 16, PYp0 + 6, ncx + 16, PYp0 + 34], fill=(34, 28, 24))
 d.pieslice([ncx - 35, PYp0 + 22, ncx + 35, PYp0 + 96], start=175, end=365, fill=(34, 28, 24))
 d.chord([ncx - 35, PYp0 + 22, ncx + 35, PYp0 + 96], start=175, end=365, fill=(34, 28, 24))
-d.rectangle([ncx - 42, PYp0 + 52, ncx - 30, PYp0 + 120], fill=(34, 28, 24))
-d.rectangle([ncx + 30, PYp0 + 52, ncx + 42, PYp0 + 120], fill=(34, 28, 24))
+d.rectangle([ncx - 40, PYp0 + 52, ncx - 30, PYp0 + 112], fill=(34, 28, 24))
+d.rectangle([ncx + 30, PYp0 + 52, ncx + 40, PYp0 + 112], fill=(34, 28, 24))
+d.ellipse([ncx - 40, PYp0 + 102, ncx - 30, PYp0 + 122], fill=(34, 28, 24))
+d.ellipse([ncx + 30, PYp0 + 102, ncx + 40, PYp0 + 122], fill=(34, 28, 24))
 # ears + earrings
 d.ellipse([ncx - 37, PYp0 + 78, ncx - 30, PYp0 + 94], fill=(220, 172, 136))
 d.ellipse([ncx + 30, PYp0 + 78, ncx + 37, PYp0 + 94], fill=(220, 172, 136))
@@ -134,8 +136,8 @@ for label, val in fields:
     if label.startswith("KANTOR"):
         fy -= 6
 
-# signature
-sy = 724
+# signature (nudged down after first render so it clears the authority field)
+sy = 732
 text(LX0 + 30, sy, "Laras Ayu Danarti", SERIF_I(24), fill=(28, 58, 66))
 d.line([(LX0 + 30, sy + 34), (LX0 + 250, sy + 34)], fill=INK_SOFT, width=1)
 text(LX0 + 30, sy + 40, "TANDA TANGAN / HOLDER'S SIGNATURE", SANS(8), fill=GREY_TXT)
@@ -161,9 +163,14 @@ text(MX0 + 14, MY0 + 18, line1, MONO(15), fill=(30, 34, 40))
 text(MX0 + 14, MY0 + 52, line2, MONO(15), fill=(30, 34, 40))
 text(LX0 + 28, 952, "2", SERIF(13), fill=GREY_TXT)
 
-# faint watermark emblem, left page
-wx, wy = cx, 640
-d.ellipse([wx - 60, wy - 60, wx + 60, wy + 60], outline=(232, 226, 206), width=2)
+# faint watermark emblem, left page (kept clear of the data fields)
+wx, wy = LX0 + 112, 560
+d.ellipse([wx - 52, wy - 52, wx + 52, wy + 52], outline=(238, 232, 214), width=2)
+d.line([(wx, wy - 28), (wx, wy - 6)], fill=(238, 232, 214), width=2)
+d.line([(wx, wy - 6), (wx - 20, wy + 16)], fill=(238, 232, 214), width=2)
+d.line([(wx, wy - 6), (wx, wy + 16)], fill=(238, 232, 214), width=2)
+d.line([(wx, wy - 6), (wx + 20, wy + 16)], fill=(238, 232, 214), width=2)
+d.polygon([(wx - 24, wy + 18), (wx + 24, wy + 18), (wx + 17, wy + 30), (wx - 17, wy + 30)], outline=(238, 232, 214), width=2)
 
 # ---------- right page ----------
 text(RX0 + 26, 52, "VISA / VISAS", SERIF_B(24))
@@ -172,11 +179,11 @@ d.line([(RX0 + 26, 92), (RX1 - 26, 92)], fill=INK, width=2)
 text(RX0 + 26, 102, "ENTRY AND EXIT STAMPS — TRAVEL HISTORY", SANS(9), fill=GREY_TXT)
 
 stamps = [
-    ("DANARA", "DEPARTURE", "KUALA DANARA", "05 MAR 2024", RUST, -2, "rect"),
+    ("DANARA", "DEPARTURE", "KUALA DANARA", "05 MAR 2024", RUST, -3, "rect"),
     ("KARANGA", "ARRIVAL", "KUALA KARANG", "06 MAR 2024", BLUE, 2, "rect"),
     ("KARANGA", "DEPARTURE", "KUALA KARANG", "20 MAR 2024", BLUE, -2, "rect"),
     ("DANARA", "ARRIVAL", "KUALA DANARA", "21 MAR 2024", RUST, 2, "rect"),
-    ("DANARA", "DEPARTURE", "KUALA DANARA", "14 AUG 2024", RUST, 2, "oval"),
+    ("DANARA", "DEPARTURE", "KUALA DANARA", "14 AUG 2024", RUST, 3, "oval"),
     ("BINTARA", "ARRIVAL", "PELABUHAN BINTARA", "15 AUG 2024", GREEN, -2, "oval"),
     ("BINTARA", "DEPARTURE", "PELABUHAN BINTARA", "30 AUG 2024", GREEN, 2, "oval"),
     ("DANARA", "ARRIVAL", "KUALA DANARA", "31 AUG 2024", RUST, -2, "oval"),
@@ -234,7 +241,7 @@ fd.text((75, 42), "CANAL DUES", font=SANS_B(15), fill=RUST + (255,), anchor="ma"
 fd.text((75, 64), "PAID", font=SANS_B(17), fill=RUST + (255,), anchor="ma")
 fd.text((75, 90), "12 JAN", font=SANS_B(15), fill=RUST + (255,), anchor="ma")
 fs = fs.rotate(-12, expand=True, resample=Image.BICUBIC)
-img.paste(fs, (BX1 - 138, BY1 - 92), fs)
+img.paste(fs, (BX1 - 138, BY1 - 104), fs)
 
 text(RX0 + 26, 838, "This passport remains the property of the Republic of Danara.", SERIF_I(12), fill=GREY_TXT)
 text(RX0 + 26, 858, "If found, please return to any Danaran consulate or canal lock post.", SERIF_I(12), fill=GREY_TXT)
